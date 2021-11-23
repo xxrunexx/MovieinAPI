@@ -1,27 +1,29 @@
 package account
 
+import "time"
+
 type AccountCore struct {
-	ID         int
-	Username   string
-	Password   string
-	Email      string
-	Watchlists []WatchlistCore
+	ID        int
+	Username  string
+	Password  string
+	Email     string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
-type WatchlistCore struct {
-	ID        int
-	AccountID int
-	MoviesID  int
-}
+// type PaymentMethodCore struct {
+// 	ID   int
+// 	Name string
+// }
 
 // Untuk layer data
 type Data interface {
 	InsertAccount(accData AccountCore) error
-	InsertWatchlist(wlData WatchlistCore) error
+	// InsertPayMethod(pmData PaymentMethodCore) error
 }
 
 // Untuk layer business
 type Business interface {
 	CreateAccount(accData AccountCore) error
-	CreateWatchlist(wlData WatchlistCore) error
+	// CreatePayMethod(pmData PaymentMethodCore) error
 }

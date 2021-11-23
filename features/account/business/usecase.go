@@ -16,10 +16,3 @@ func (accBusiness *AccountBusiness) CreateAccount(accData account.AccountCore) e
 	}
 	return nil
 }
-
-func (wlBusiness *AccountBusiness) CreateWatchlist(wlData account.WatchlistCore) error {
-	if err := wlBusiness.accountData.InsertWatchlist(wlData); err != nil {
-		return err
-	}
-	return nil
-}

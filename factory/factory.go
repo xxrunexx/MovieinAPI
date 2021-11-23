@@ -1,36 +1,30 @@
 package factory
 
 import (
-	"movie-api/features/account/business"
-	"movie-api/features/account/data"
-	"movie-api/features/account/presentation"
+	// Account Domain
+	"movie-api/driver"
+	accbus "movie-api/features/account/business"
+	accdata "movie-api/features/account/data"
+	accpres "movie-api/features/account/presentation"
 
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
+	// Watchlist Domain
+	wlbus "movie-api/features/watchlist/business"
+	wldata "movie-api/features/watchlist/data"
+	wlpres "movie-api/features/watchlist/presentation"
 )
 
-var DB *gorm.DB
-
-func InitDB() {
-	var err error
-	db, err := gorm.Open(mysql.Open("root:admin@/moviein?parseTime=true"), &gorm.Config{})
-	if err != nil {
-		panic(err)
-	}
-
-	DB = db
-	DB.AutoMigrate(&data.Account{}, &data.Watchlist{})
-
-}
-
 type presenter struct {
-	AccountPresentation presentation.AccountHandler
+	AccountPresentation   accpres.AccountHandler
+	WatchlistPresentation wlpres.WatchlistHandler
 }
 
 func Init() presenter {
-	accountData := data.NewMySqlAccount(DB)
-	accountBusiness := business.NewBusinessAccount(accountData)
+	accountData := accdata.NewMySqlAccount(driver.DB)
+	accountBusiness := accbus.NewBusinessAccount(accountData)
+	watchlistData := wldata.NewMySqlWatchlist(driver.DB)
+	watchlistBusiness := wlbus.NewBusinessWatchlist(watchlistData)
 	return presenter{
-		AccountPresentation: *presentation.NewHandlerAccount(accountBusiness),
+		AccountPresentation:   *accpres.NewHandlerAccount(accountBusiness),
+		WatchlistPresentation: *wlpres.NewHandlerWatchlist(watchlistBusiness),
 	}
 }
