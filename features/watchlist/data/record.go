@@ -12,7 +12,7 @@ type Watchlist struct {
 	MovieID   int
 }
 
-func FromWatchlistCore(Data watchlist.WatchlistCore) Watchlist {
+func toRecordWatchlist(Data watchlist.WatchlistCore) Watchlist {
 	return Watchlist{
 		AccountID: Data.AccountID,
 		MovieID:   Data.MovieID,

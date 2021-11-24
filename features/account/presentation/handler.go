@@ -9,6 +9,7 @@ import (
 	// Import files
 	"movie-api/features/account"
 	"movie-api/features/account/presentation/request"
+	"movie-api/features/account/presentation/response"
 )
 
 type AccountHandler struct {
@@ -19,23 +20,36 @@ func NewHandlerAccount(accountBusiness account.Business) *AccountHandler {
 	return &AccountHandler{accountBusiness}
 }
 
-func (accHandler *AccountHandler) CreateAccount(c echo.Context) error {
+func (accHandler *AccountHandler) CreateAccountsHandler(e echo.Context) error {
 	newAccount := request.ReqAccount{}
 
-	if err := c.Bind(&newAccount); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
+	if err := e.Bind(&newAccount); err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
 		})
 	}
 
-	if err := accHandler.accountBusiness.CreateAccount(request.ToAccountCore(newAccount)); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
+	if err := accHandler.accountBusiness.CreateAccount(newAccount.ToAccountCore()); err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusAccepted, map[string]interface{}{
+	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
-		"data":    newAccount,
+	})
+}
+
+func (accHandler *AccountHandler) GetAccountsHandler(e echo.Context) error {
+	data, err := accHandler.accountBusiness.GetAccount(account.AccountCore{})
+
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToAccountResponseList(data),
 	})
 }

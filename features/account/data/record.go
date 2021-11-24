@@ -13,10 +13,27 @@ type Account struct {
 	Email    string
 }
 
-func FromAccountCore(Data account.AccountCore) Account {
+func toAccountRecord(account account.AccountCore) Account {
 	return Account{
-		Username: Data.Username,
-		Password: Data.Password,
-		Email:    Data.Email,
+		Username: account.Username,
+		Password: account.Password,
+		Email:    account.Email,
 	}
+}
+
+func toAccountCore(acc Account) account.AccountCore {
+	return account.AccountCore{
+		Username: acc.Username,
+		Password: acc.Password,
+		Email:    acc.Email,
+	}
+}
+
+func toAccountCoreList(accList []Account) []account.AccountCore {
+	convAcc := []account.AccountCore{}
+
+	for _, account := range accList {
+		convAcc = append(convAcc, toAccountCore(account))
+	}
+	return convAcc
 }

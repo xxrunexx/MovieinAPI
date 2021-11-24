@@ -11,19 +11,14 @@ type AccountCore struct {
 	UpdatedAt time.Time
 }
 
-// type PaymentMethodCore struct {
-// 	ID   int
-// 	Name string
-// }
-
 // Untuk layer data
 type Data interface {
-	InsertAccount(accData AccountCore) error
-	// InsertPayMethod(pmData PaymentMethodCore) error
+	InsertAccount(accData AccountCore) (err error)
+	SelectAccount(AccountCore) (account []AccountCore, err error)
 }
 
 // Untuk layer business
 type Business interface {
-	CreateAccount(accData AccountCore) error
-	// CreatePayMethod(pmData PaymentMethodCore) error
+	CreateAccount(accData AccountCore) (err error)
+	GetAccount(AccountCore) (account []AccountCore, err error)
 }

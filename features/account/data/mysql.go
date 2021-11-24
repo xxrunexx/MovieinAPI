@@ -9,18 +9,29 @@ import (
 )
 
 type AccountData struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
-func NewMySqlAccount(db *gorm.DB) account.Data {
-	return &AccountData{db}
+func NewMySqlAccount(DB *gorm.DB) account.Data {
+	return &AccountData{DB}
 }
 
 func (accData *AccountData) InsertAccount(account account.AccountCore) error {
-	convData := FromAccountCore(account)
+	convData := toAccountRecord(account)
 
-	if err := accData.db.Create(&convData).Error; err != nil {
+	if err := accData.DB.Create(&convData).Error; err != nil {
 		return err
 	}
 	return nil
+}
+
+func (accData *AccountData) SelectAccount(account account.AccountCore) ([]account.AccountCore, error) {
+	var accounts []Account
+
+	err := accData.DB.Find(&accounts).Error
+
+	if err != nil {
+		return nil, err
+	}
+	return toAccountCoreList(accounts), nil
 }
