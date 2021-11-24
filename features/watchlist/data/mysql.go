@@ -15,7 +15,7 @@ func NewMySqlWatchlist(db *gorm.DB) watchlist.Data {
 }
 
 func (wlData *WatchlistData) InsertWatchlist(watchlist watchlist.WatchlistCore) error {
-	convData := toRecordWatchlist(watchlist)
+	convData := toWatchlistRecord(watchlist)
 
 	if err := wlData.db.Create(&convData).Error; err != nil {
 		return err
@@ -23,12 +23,12 @@ func (wlData *WatchlistData) InsertWatchlist(watchlist watchlist.WatchlistCore) 
 	return nil
 }
 
-// func (wlData *WatchlistData) SelectWatchlist(watchlist.WatchlistCore) ([]watchlist.WatchlistCore, error) {
-// 	var watchlists []Watchlist
+func (wlData *WatchlistData) SelectWatchlist(watchlist watchlist.WatchlistCore) ([]watchlist.WatchlistCore, error) {
+	var watchlists []Watchlist
 
-// 	err := wlData.db.Find(&watchlists).Error
-// 	if err != nil {
-// 		return nil, err
-// 	}
-// 	return toRecordWatchlist(watchlists), nil
-// }
+	err := wlData.db.Find(&watchlists).Error
+	if err != nil {
+		return nil, err
+	}
+	return toWatchlistCoreList(watchlists), nil
+}

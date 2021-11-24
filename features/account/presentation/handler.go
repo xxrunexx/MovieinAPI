@@ -20,7 +20,7 @@ func NewHandlerAccount(accountBusiness account.Business) *AccountHandler {
 	return &AccountHandler{accountBusiness}
 }
 
-func (accHandler *AccountHandler) CreateAccountsHandler(e echo.Context) error {
+func (accHandler *AccountHandler) CreateAccountHandler(e echo.Context) error {
 	newAccount := request.ReqAccount{}
 
 	if err := e.Bind(&newAccount); err != nil {
@@ -37,6 +37,7 @@ func (accHandler *AccountHandler) CreateAccountsHandler(e echo.Context) error {
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
+		"data":    newAccount,
 	})
 }
 

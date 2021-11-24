@@ -7,7 +7,7 @@ type ReqWatchlist struct {
 	MovieID   int `json:"movies_id"`
 }
 
-func ToWatchlistCore(reqData ReqWatchlist) watchlist.WatchlistCore {
+func (reqData *ReqWatchlist) ToWatchlistCore() watchlist.WatchlistCore {
 	return watchlist.WatchlistCore{
 		AccountID: reqData.AccountID,
 		MovieID:   reqData.MovieID,

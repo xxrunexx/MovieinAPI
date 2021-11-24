@@ -16,3 +16,11 @@ func (wlBusiness *WatchlistBusiness) CreateWatchlist(wlData watchlist.WatchlistC
 	}
 	return nil
 }
+
+func (wlBusiness *WatchlistBusiness) GetWatchlist(wlData watchlist.WatchlistCore) ([]watchlist.WatchlistCore, error) {
+	watchlists, err := wlBusiness.watchlistData.SelectWatchlist(wlData)
+	if err != nil {
+		return nil, err
+	}
+	return watchlists, nil
+}
