@@ -13,9 +13,13 @@ func New() *echo.Echo {
 	// Initiate Echo
 	e := echo.New()
 	e.Pre(middleware.RemoveTrailingSlash())
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
 
 	// Account
-	e.POST("/account", presenter.AccountPresentation.CreateAccount)
+	e.POST("/account", presenter.AccountPresentation.CreateAccountsHandler)
+	e.GET("/account", presenter.AccountPresentation.GetAccountsHandler)
 	// e.PUT("/account/:id", UpdateAccount)
 
 	// Watchlist

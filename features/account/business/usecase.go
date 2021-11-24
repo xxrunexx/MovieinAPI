@@ -1,6 +1,8 @@
 package business
 
-import "movie-api/features/account"
+import (
+	"movie-api/features/account"
+)
 
 type AccountBusiness struct {
 	accountData account.Data
@@ -15,4 +17,12 @@ func (accBusiness *AccountBusiness) CreateAccount(accData account.AccountCore) e
 		return err
 	}
 	return nil
+}
+
+func (accBusiness *AccountBusiness) GetAccount(accData account.AccountCore) ([]account.AccountCore, error) {
+	accounts, err := accBusiness.accountData.SelectAccount(accData)
+	if err != nil {
+		return nil, err
+	}
+	return accounts, nil
 }
