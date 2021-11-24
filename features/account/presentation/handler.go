@@ -3,7 +3,6 @@ package presentation
 import (
 	// Import Echo
 	"net/http"
-	"strconv"
 
 	"github.com/labstack/echo/v4"
 
@@ -38,27 +37,5 @@ func (accHandler *AccountHandler) CreateAccount(c echo.Context) error {
 	return c.JSON(http.StatusAccepted, map[string]interface{}{
 		"message": "Success",
 		"data":    newAccount,
-	})
-}
-
-func (wlHandler *AccountHandler) CreateWatchlist(c echo.Context) error {
-	newWatchlist := request.ReqWatchlist{}
-	id, _ := strconv.Atoi(c.Param("id"))
-	newWatchlist.AccountID = id
-	if err := c.Bind(&newWatchlist); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
-		})
-	}
-
-	if err := wlHandler.accountBusiness.CreateWatchlist(request.ToWatchlistCore(newWatchlist)); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
-		})
-	}
-
-	return c.JSON(http.StatusAccepted, map[string]interface{}{
-		"message": "Success",
-		"data":    newWatchlist,
 	})
 }

@@ -1,44 +1,29 @@
 package main
 
 import (
-	"movie-api/factory"
-
-	// "github.com/labstack/echo"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
-	"gorm.io/gorm"
+	"movie-api/driver"
+	"movie-api/routes"
 )
 
 // Use for Request later
-type Account struct {
-	gorm.Model
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-}
+// type Account struct {
+// 	gorm.Model
+// 	Username string `json:"username"`
+// 	Password string `json:"password"`
+// 	Email    string `json:"email"`
+// }
 
 // Use for Response Later
-type ResponseAccount struct {
-	ID       int    `json:"id"`
-	Username string `json:"username"`
-	Password string `json:"password"`
-	Email    string `json:"email"`
-}
+// type ResponseAccount struct {
+// 	ID       int    `json:"id"`
+// 	Username string `json:"username"`
+// 	Password string `json:"password"`
+// 	Email    string `json:"email"`
+// }
 
 func main() {
-	factory.InitDB()
-	// Initiate Echo
-	e := echo.New()
-	e.Pre(middleware.RemoveTrailingSlash())
-
-	presenter := factory.Init()
-
-	// Routing
-	e.POST("/account", presenter.AccountPresentation.CreateAccount)
-	e.POST("/account/:id/watchlist", presenter.AccountPresentation.CreateWatchlist)
-	// e.PUT("/account/:id", UpdateAccount)
-	// e.GET("/account", GetAllAccount)
-	// e.GET("/account/:id", GetAccountByID)
+	driver.InitDB()
+	e := routes.New()
 
 	// Starting the server
 	e.Start(":8585")
