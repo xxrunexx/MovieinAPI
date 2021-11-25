@@ -3,10 +3,11 @@ package account
 import "time"
 
 type AccountCore struct {
-	ID        int
+	ID        uint
 	Username  string
 	Password  string
 	Email     string
+	Token     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }

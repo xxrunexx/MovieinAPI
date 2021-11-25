@@ -2,6 +2,7 @@ package business
 
 import (
 	"movie-api/features/account"
+	"movie-api/middleware"
 )
 
 type AccountBusiness struct {
@@ -25,4 +26,16 @@ func (accBusiness *AccountBusiness) GetAccount(accData account.AccountCore) ([]a
 		return nil, err
 	}
 	return accounts, nil
+}
+
+func (accBusiness *AccountBusiness) LoginAccount(accData account.AccountCore) (account.AccountCore, error) {
+	accountData, err := accBusiness.accountData.CheckAccount(accData)
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+	accountData.Token, err = middleware.CreateToken(accData.ID, accData.Username)
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+	return accountData, nil
 }
