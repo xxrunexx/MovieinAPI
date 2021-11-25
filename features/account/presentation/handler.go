@@ -54,3 +54,19 @@ func (accHandler *AccountHandler) GetAccountsHandler(e echo.Context) error {
 		"data":    response.ToAccountResponseList(data),
 	})
 }
+
+func (accHandler *AccountHandler) LoginAccountHandler(e echo.Context) error {
+	AccountAuth := request.AccountAuth{}
+	e.Bind(&AccountAuth)
+
+	data, err := accHandler.accountBusiness.LoginAccount(AccountAuth.ToAccountCore())
+	if err != nil {
+		return e.JSON(http.StatusForbidden, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToAccountLoginResponse(data),
+	})
+}

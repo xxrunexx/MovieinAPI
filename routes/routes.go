@@ -18,7 +18,8 @@ func New() *echo.Echo {
 	}))
 
 	// Account
-	e.POST("/account", presenter.AccountPresentation.CreateAccountHandler)
+	e.POST("/account/register", presenter.AccountPresentation.CreateAccountHandler)
+	e.POST("/account/login", presenter.AccountPresentation.LoginAccountHandler)
 	e.GET("/account", presenter.AccountPresentation.GetAccountsHandler)
 	// e.PUT("/account/:id", UpdateAccount)
 

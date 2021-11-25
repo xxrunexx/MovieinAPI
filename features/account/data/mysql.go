@@ -2,6 +2,7 @@ package data
 
 import (
 	// Import GORM
+
 	"errors"
 
 	"gorm.io/gorm"
@@ -42,7 +43,7 @@ func (accData *AccountData) CheckAccount(data account.AccountCore) (account.Acco
 	var accountData Account
 
 	// Eliminate null data
-	if data.Username == "" && data.Password == "" {
+	if accountData.Username == "" && accountData.Password == "" {
 		return account.AccountCore{}, errors.New("user not found")
 	}
 
