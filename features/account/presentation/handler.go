@@ -20,7 +20,7 @@ func NewHandlerAccount(accountBusiness account.Business) *AccountHandler {
 	return &AccountHandler{accountBusiness}
 }
 
-func (accHandler *AccountHandler) CreateAccountsHandler(e echo.Context) error {
+func (accHandler *AccountHandler) CreateAccountHandler(e echo.Context) error {
 	newAccount := request.ReqAccount{}
 
 	if err := e.Bind(&newAccount); err != nil {
@@ -37,6 +37,7 @@ func (accHandler *AccountHandler) CreateAccountsHandler(e echo.Context) error {
 
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
+		"data":    newAccount,
 	})
 }
 
@@ -51,5 +52,21 @@ func (accHandler *AccountHandler) GetAccountsHandler(e echo.Context) error {
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    response.ToAccountResponseList(data),
+	})
+}
+
+func (accHandler *AccountHandler) LoginAccountHandler(e echo.Context) error {
+	AccountAuth := request.AccountAuth{}
+	e.Bind(&AccountAuth)
+
+	data, err := accHandler.accountBusiness.LoginAccount(AccountAuth.ToAccountCore())
+	if err != nil {
+		return e.JSON(http.StatusForbidden, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToAccountLoginResponse(data),
 	})
 }

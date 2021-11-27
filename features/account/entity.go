@@ -3,10 +3,11 @@ package account
 import "time"
 
 type AccountCore struct {
-	ID        int
+	ID        uint
 	Username  string
 	Password  string
 	Email     string
+	Token     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -15,10 +16,12 @@ type AccountCore struct {
 type Data interface {
 	InsertAccount(accData AccountCore) (err error)
 	SelectAccount(AccountCore) (account []AccountCore, err error)
+	CheckAccount(AccountCore) (account AccountCore, err error)
 }
 
 // Untuk layer business
 type Business interface {
 	CreateAccount(accData AccountCore) (err error)
 	GetAccount(AccountCore) (account []AccountCore, err error)
+	LoginAccount(AccountCore) (account AccountCore, err error)
 }

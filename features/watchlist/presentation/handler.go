@@ -23,13 +23,13 @@ func (wlHandler *WatchlistHandler) CreateWatchlist(c echo.Context) error {
 	newWatchlist.MovieID = id
 	if err := c.Bind(&newWatchlist); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
+			"message": err.Error(),
 		})
 	}
 
-	if err := wlHandler.watchlistBusiness.CreateWatchlist(request.ToWatchlistCore(newWatchlist)); err != nil {
+	if err := wlHandler.watchlistBusiness.CreateWatchlist(newWatchlist.ToWatchlistCore()); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]interface{}{
-			"message": "Bad Request",
+			"message": err.Error(),
 		})
 	}
 
@@ -38,3 +38,5 @@ func (wlHandler *WatchlistHandler) CreateWatchlist(c echo.Context) error {
 		"data":    newWatchlist,
 	})
 }
+
+// func (wlHandler *WatchlistHandler) GetWatchlistsByID()

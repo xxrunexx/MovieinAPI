@@ -5,22 +5,6 @@ import (
 	"movie-api/routes"
 )
 
-// Use for Request later
-// type Account struct {
-// 	gorm.Model
-// 	Username string `json:"username"`
-// 	Password string `json:"password"`
-// 	Email    string `json:"email"`
-// }
-
-// Use for Response Later
-// type ResponseAccount struct {
-// 	ID       int    `json:"id"`
-// 	Username string `json:"username"`
-// 	Password string `json:"password"`
-// 	Email    string `json:"email"`
-// }
-
 func main() {
 	driver.InitDB()
 	e := routes.New()
@@ -28,18 +12,6 @@ func main() {
 	// Starting the server
 	e.Start(":8585")
 }
-
-// func GetAllAccount(c echo.Context) error {
-// 	var accounts []Account
-
-// 	if err := DB.Find(&accounts).Error; err != nil {
-// 		return c.JSON(http.StatusBadRequest, err)
-// 	}
-// 	return c.JSON(http.StatusAccepted, map[string]interface{}{
-// 		"message": "Success",
-// 		"data":    accounts,
-// 	})
-// }
 
 // func UpdateAccount(c echo.Context) error {
 // 	id, _ := strconv.Atoi(c.Param("id"))

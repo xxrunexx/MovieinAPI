@@ -8,6 +8,12 @@ type RespAccount struct {
 	Email    string `json:"email"`
 }
 
+type RespAccountLogin struct {
+	Id       uint   `json:"id"`
+	Username string `json:"username"`
+	Token    string `json:"token"`
+}
+
 func ToAccountResponse(account account.AccountCore) RespAccount {
 	return RespAccount{
 		Username: account.Username,
@@ -23,4 +29,12 @@ func ToAccountResponseList(accList []account.AccountCore) []RespAccount {
 		convAcc = append(convAcc, ToAccountResponse(account))
 	}
 	return convAcc
+}
+
+func ToAccountLoginResponse(account account.AccountCore) RespAccountLogin {
+	return RespAccountLogin{
+		Id:       account.ID,
+		Username: account.Username,
+		Token:    account.Token,
+	}
 }
