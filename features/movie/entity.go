@@ -16,10 +16,14 @@ type MovieCore struct {
 
 // Untuk layer data / repo
 type Data interface {
-	SelectMovie(mvData MovieCore) ([]MovieCore, error)
+	SelectMovieByTitle(title string) (movie MovieCore, err error)
+	SelectMoviePopular() (movie []MovieCore, err error)
+	SelectMovieOnGoing() (movie []MovieCore, err error)
 }
 
 // Untuk layer business / service
 type Business interface {
-	GetMovie(mvData MovieCore) ([]MovieCore, error)
+	GetMovieByTitle(title string) (movie MovieCore, err error)
+	GetMoviePopular() (movie []MovieCore, err error)
+	GetMovieOnGoing() (movie []MovieCore, err error)
 }
