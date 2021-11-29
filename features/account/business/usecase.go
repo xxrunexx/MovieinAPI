@@ -28,6 +28,15 @@ func (accBusiness *AccountBusiness) GetAccount(accData account.AccountCore) ([]a
 	return accounts, nil
 }
 
+func (accBusiness *AccountBusiness) GetAccountByID(id int) (account.AccountCore, error) {
+	accountData, err := accBusiness.accountData.SelectAccountByID(id)
+
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+	return accountData, nil
+}
+
 func (accBusiness *AccountBusiness) LoginAccount(accData account.AccountCore) (account.AccountCore, error) {
 	accountData, err := accBusiness.accountData.CheckAccount(accData)
 	if err != nil {

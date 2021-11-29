@@ -3,6 +3,7 @@ package presentation
 import (
 	// Import Echo
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 
@@ -52,6 +53,26 @@ func (accHandler *AccountHandler) GetAccountsHandler(e echo.Context) error {
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    response.ToAccountResponseList(data),
+	})
+}
+
+func (accHandler *AccountHandler) GetAccountByIDHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	data, err := accHandler.accountBusiness.GetAccountByID(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToAccountResponse(data),
 	})
 }
 

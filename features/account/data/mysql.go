@@ -39,17 +39,35 @@ func (accData *AccountData) SelectAccount(data account.AccountCore) ([]account.A
 	return toAccountCoreList(accounts), nil
 }
 
+func (accData *AccountData) SelectAccountByID(id int) (account.AccountCore, error) {
+	var singleAccount Account
+
+	err := accData.DB.First(&singleAccount, id).Error
+
+	if singleAccount.Username == "" && singleAccount.ID == 0 {
+		return account.AccountCore{}, errors.New("user not found")
+	}
+
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+
+	return toAccountCore(singleAccount), nil
+}
+
 func (accData *AccountData) CheckAccount(data account.AccountCore) (account.AccountCore, error) {
 	var accountData Account
+	err := accData.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&accountData).Error
 
 	// Eliminate null data
-	if accountData.Username == "" && accountData.Password == "" {
+	if accountData.Username == "" && accountData.ID == 0 {
 		return account.AccountCore{}, errors.New("user not found")
 	}
 
 	// Validate with DB
-	if err := accData.DB.Where("username = ? and password = ?", data.Username, data.Password).First(&accountData).Error; err != nil {
+	if err != nil {
 		return account.AccountCore{}, err
 	}
+
 	return toAccountCore(accountData), nil
 }
