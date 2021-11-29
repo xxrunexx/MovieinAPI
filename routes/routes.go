@@ -21,6 +21,7 @@ func New() *echo.Echo {
 	e.POST("/account/register", presenter.AccountPresentation.CreateAccountHandler)
 	e.POST("/account/login", presenter.AccountPresentation.LoginAccountHandler)
 	e.GET("/account", presenter.AccountPresentation.GetAccountsHandler)
+	e.GET("/account/:id", presenter.AccountPresentation.GetAccountByIDHandler)
 	// e.PUT("/account/:id", UpdateAccount)
 
 	// Watchlist

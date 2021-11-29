@@ -12,9 +12,9 @@ var DB *gorm.DB
 
 func InitDB() {
 	// For Linux
-	// dsn := "root:admin@tcp(127.0.0.1)/moviein?parseTime=true"
+	dsn := "root:admin@tcp(127.0.0.1)/moviein?parseTime=true"
 	// For Windows
-	dsn := "root:@tcp(127.0.0.1)/moviein?parseTime=true"
+	// dsn := "root:@tcp(127.0.0.1)/moviein?parseTime=true"
 
 	var err error
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
