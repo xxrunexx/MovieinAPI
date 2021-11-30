@@ -1,7 +1,7 @@
-package movie
+package tmdb
 
-type MovieCore struct {
-	ID               int
+type TmdbAPICore struct {
+	ID               uint
 	Title            string
 	Genre            string
 	ImdbID           int
@@ -14,16 +14,15 @@ type MovieCore struct {
 	Vote_count       int
 }
 
-// Untuk layer data / repo
 type Data interface {
-	SelectMovieByTitle(title string) (movie MovieCore, err error)
+	SelectMovieByTitle(title string) (movie TmdbAPICore, err error)
 	// SelectMoviePopular() (movie []MovieCore, err error)
 	// SelectMovieOnGoing() (movie []MovieCore, err error)
 }
 
 // Untuk layer business / service
 type Business interface {
-	GetMovieByTitle(title string) (movie MovieCore, err error)
-	// GetMoviePopular() (movie []MovieCore, err error)
-	// GetMovieOnGoing() (movie []MovieCore, err error)
+	GetMovieByTitle(title string) (movie TmdbAPICore, err error)
+	// 	GetMoviePopular() (movie []MovieCore, err error)
+	// 	GetMovieOnGoing() (movie []MovieCore, err error)
 }

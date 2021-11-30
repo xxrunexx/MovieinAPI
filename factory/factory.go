@@ -11,20 +11,32 @@ import (
 	wlbus "movie-api/features/watchlist/business"
 	wldata "movie-api/features/watchlist/data"
 	wlpres "movie-api/features/watchlist/presentation"
+
+	// Tmdb Domain
+	tmdbbus "movie-api/features/tmdb/business"
+	tmdbdata "movie-api/features/tmdb/data"
+	tmdbpres "movie-api/features/tmdb/presentation"
 )
 
 type presenter struct {
 	AccountPresentation   accpres.AccountHandler
 	WatchlistPresentation wlpres.WatchlistHandler
+	TmdbPresentation      tmdbpres.TmdbHandler
 }
 
 func Init() presenter {
+	// Account
 	accountData := accdata.NewMySqlAccount(driver.DB)
 	accountBusiness := accbus.NewBusinessAccount(accountData)
+	// Watchlist
 	watchlistData := wldata.NewMySqlWatchlist(driver.DB)
 	watchlistBusiness := wlbus.NewBusinessWatchlist(watchlistData)
+	// 3rdparty
+	tmdbData := tmdbdata.NewData()
+	tmdbBusiness := tmdbbus.NewBusinessTmdb(tmdbData)
 	return presenter{
 		AccountPresentation:   *accpres.NewHandlerAccount(accountBusiness),
 		WatchlistPresentation: *wlpres.NewHandlerWatchlist(watchlistBusiness),
+		TmdbPresentation:      *tmdbpres.NewHandlerTmdb(tmdbBusiness),
 	}
 }
