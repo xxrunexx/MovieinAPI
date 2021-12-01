@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"movie-api/features/tmdb"
 	"net/http"
 	"net/url"
@@ -41,9 +42,11 @@ func (api *Tmdb) SelectMovieByTitle(title string) (tmdb.TmdbAPICore, error) {
 	}
 
 	defer resp.Body.Close()
-	bodybytes, _ := ioutil.ReadAll(resp.Body)
-
-	// fmt.Println(string(bodybytes))
+	bodybytes, readErr := ioutil.ReadAll(resp.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
+	}
+	fmt.Println(string(bodybytes))
 	// Gagal di sini unmarshal gagal
 	json.Unmarshal(bodybytes, &movie)
 	// if err != nil {
@@ -51,5 +54,4 @@ func (api *Tmdb) SelectMovieByTitle(title string) (tmdb.TmdbAPICore, error) {
 	// 	return tmdb.TmdbAPICore{}, err
 	// }
 	return movie.toMovieApiCore(), nil
-
 }

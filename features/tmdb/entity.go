@@ -10,8 +10,8 @@ type TmdbAPICore struct {
 	Popularity       float32
 	Status           string
 	Overview         string
-	Vote_average     float32
-	Vote_count       int
+	VoteAverage      float32
+	VoteCount        int
 }
 
 type Data interface {
