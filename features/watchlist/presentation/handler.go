@@ -3,6 +3,7 @@ package presentation
 import (
 	"movie-api/features/watchlist"
 	"movie-api/features/watchlist/presentation/request"
+	"movie-api/features/watchlist/presentation/response"
 	"net/http"
 	"strconv"
 
@@ -17,26 +18,44 @@ func NewHandlerWatchlist(watchlistBusiness watchlist.Business) *WatchlistHandler
 	return &WatchlistHandler{watchlistBusiness}
 }
 
-func (wlHandler *WatchlistHandler) CreateWatchlist(c echo.Context) error {
+func (wlHandler *WatchlistHandler) CreateWatchlistHandler(e echo.Context) error {
 	newWatchlist := request.ReqWatchlist{}
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(e.Param("id"))
 	newWatchlist.MovieID = id
-	if err := c.Bind(&newWatchlist); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+	if err := e.Bind(&newWatchlist); err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
 
 	if err := wlHandler.watchlistBusiness.CreateWatchlist(newWatchlist.ToWatchlistCore()); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]interface{}{
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
 
-	return c.JSON(http.StatusAccepted, map[string]interface{}{
+	return e.JSON(http.StatusAccepted, map[string]interface{}{
 		"message": "Success",
 		"data":    newWatchlist,
 	})
 }
 
-// func (wlHandler *WatchlistHandler) GetWatchlistsByID()
+func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
+	account_id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	data, err := wlHandler.watchlistBusiness.GetWatchlist(account_id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToWatchlistResponseList(data),
+	})
+}

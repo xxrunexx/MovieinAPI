@@ -13,11 +13,11 @@ type WatchlistCore struct {
 // Untuk layer data / repo
 type Data interface {
 	InsertWatchlist(wlData WatchlistCore) (err error)
-	SelectWatchlist(wlData WatchlistCore) ([]WatchlistCore, error)
+	SelectWatchlist(account_id int) ([]WatchlistCore, error)
 }
 
 // Untuk layer business / Service
 type Business interface {
-	CreateWatchlist(wlData WatchlistCore) error
-	GetWatchlist(wlData WatchlistCore) ([]WatchlistCore, error)
+	CreateWatchlist(wlData WatchlistCore) (err error)
+	GetWatchlist(account_id int) ([]WatchlistCore, error)
 }
