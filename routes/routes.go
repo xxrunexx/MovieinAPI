@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"movie-api/config"
 	"movie-api/factory"
 
 	"github.com/labstack/echo/v4"
@@ -10,8 +11,13 @@ import (
 func New() *echo.Echo {
 	presenter := factory.Init()
 
-	// Initiate Echo
+	// Initiate Echo & JWT
 	e := echo.New()
+	jwt := e.Group("")
+	jwt.Use(middleware.JWT([]byte(config.JWT_KEY)))
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
+	}))
 	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",
@@ -20,14 +26,21 @@ func New() *echo.Echo {
 	// Account
 	e.POST("/account/register", presenter.AccountPresentation.CreateAccountHandler)
 	e.POST("/account/login", presenter.AccountPresentation.LoginAccountHandler)
-	e.GET("/account", presenter.AccountPresentation.GetAccountsHandler)
-	e.GET("/account/:id", presenter.AccountPresentation.GetAccountByIDHandler)
+	jwt.GET("/account", presenter.AccountPresentation.GetAccountsHandler)
+	jwt.GET("/account/:id", presenter.AccountPresentation.GetAccountByIDHandler)
 	// e.PUT("/account/:id", UpdateAccount)
 
 	// Watchlist
-	e.POST("/account/:id/watchlist", presenter.WatchlistPresentation.CreateWatchlist)
+	jwt.POST("/account/:id/watchlist", presenter.WatchlistPresentation.CreateWatchlist)
 	// e.GET("/account", GetAllAccount)
 	// e.GET("/account/:id", GetAccountByID)
+
+	// Movie
+	e.GET("/movie/:title", presenter.TmdbPresentation.GetMovieByTitleHandler)
+	e.GET("/movie/popular", presenter.TmdbPresentation.GetMoviePopularHandler)
+	e.GET("/movie/ongoing", presenter.TmdbPresentation.GetMovieOnGoingHandler)
+
+	// Transaction
 
 	return e
 }
