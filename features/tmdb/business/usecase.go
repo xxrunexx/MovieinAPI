@@ -30,7 +30,7 @@ func (mvBusiness *MovieAPIBusiness) GetMoviePopular() (tmdb.TmdbAPICore, error) 
 	return movieData, nil
 }
 
-func (mvBusiness *MovieAPIBusiness) GetMoviePopular() (tmdb.TmdbAPICore, error) {
+func (mvBusiness *MovieAPIBusiness) GetMovieOnGoing() (tmdb.TmdbAPICore, error) {
 	movieData, err := mvBusiness.movieAPIData.SelectMoviePopular()
 
 	if err != nil {
