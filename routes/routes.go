@@ -31,14 +31,14 @@ func New() *echo.Echo {
 	// e.PUT("/account/:id", UpdateAccount)
 
 	// Watchlist
-	jwt.POST("/account/:id/watchlist", presenter.WatchlistPresentation.CreateWatchlist)
-	// e.GET("/account", GetAllAccount)
+	e.POST("/watchlist", presenter.WatchlistPresentation.CreateWatchlistHandler)
+	e.GET("/watchlist/:account_id", presenter.WatchlistPresentation.GetWatchlistHandler)
 	// e.GET("/account/:id", GetAccountByID)
 
 	// Movie
 	e.GET("/movie/:title", presenter.TmdbPresentation.GetMovieByTitleHandler)
-	e.GET("/movie/popular", presenter.TmdbPresentation.GetMoviePopularHandler)
-	e.GET("/movie/ongoing", presenter.TmdbPresentation.GetMovieOnGoingHandler)
+	jwt.GET("/movie/popular", presenter.TmdbPresentation.GetMoviePopularHandler)
+	jwt.GET("/movie/ongoing", presenter.TmdbPresentation.GetMovieOnGoingHandler)
 
 	// Transaction
 
