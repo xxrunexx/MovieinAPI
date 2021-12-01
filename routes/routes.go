@@ -37,5 +37,10 @@ func New() *echo.Echo {
 
 	// Movie
 	e.GET("/movie/:title", presenter.TmdbPresentation.GetMovieByTitleHandler)
+	e.GET("/movie/popular", presenter.TmdbPresentation.GetMoviePopularHandler)
+	e.GET("/movie/ongoing", presenter.TmdbPresentation.GetMovieOnGoingHandler)
+
+	// Transaction
+
 	return e
 }

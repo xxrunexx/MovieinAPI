@@ -18,6 +18,23 @@ func (mvBusiness *MovieAPIBusiness) GetMovieByTitle(title string) (tmdb.TmdbAPIC
 	if err != nil {
 		return tmdb.TmdbAPICore{}, err
 	}
-	// fmt.Println("Apa nih isinya : ", movieData)
+	return movieData, nil
+}
+
+func (mvBusiness *MovieAPIBusiness) GetMoviePopular() (tmdb.TmdbAPICore, error) {
+	movieData, err := mvBusiness.movieAPIData.SelectMoviePopular()
+
+	if err != nil {
+		return tmdb.TmdbAPICore{}, err
+	}
+	return movieData, nil
+}
+
+func (mvBusiness *MovieAPIBusiness) GetMoviePopular() (tmdb.TmdbAPICore, error) {
+	movieData, err := mvBusiness.movieAPIData.SelectMoviePopular()
+
+	if err != nil {
+		return tmdb.TmdbAPICore{}, err
+	}
 	return movieData, nil
 }

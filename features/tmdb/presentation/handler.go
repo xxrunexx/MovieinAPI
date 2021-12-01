@@ -31,3 +31,18 @@ func (tmdbHandler *TmdbHandler) GetMovieByTitleHandler(e echo.Context) error {
 		"data":    response.ToTmdbResponse(movie),
 	})
 }
+
+func (tmdbHandler *TmdbHandler) GetMoviePopularHandler(e echo.Context) error {
+
+	movie, err := tmdbHandler.tmdbBusiness.GetMoviePopular()
+	if err != nil {
+		return e.JSON(http.StatusNotFound, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToTmdbResponse(movie),
+	})
+}
