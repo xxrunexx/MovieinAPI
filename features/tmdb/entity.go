@@ -16,13 +16,13 @@ type TmdbAPICore struct {
 
 type Data interface {
 	SelectMovieByTitle(title string) (movie TmdbAPICore, err error)
-	// SelectMoviePopular() (movie []MovieCore, err error)
-	// SelectMovieOnGoing() (movie []MovieCore, err error)
+	SelectMoviePopular() (movie TmdbAPICore, err error)
+	SelectMovieOnGoing() (movie TmdbAPICore, err error)
 }
 
 // Untuk layer business / service
 type Business interface {
 	GetMovieByTitle(title string) (movie TmdbAPICore, err error)
-	// 	GetMoviePopular() (movie []MovieCore, err error)
-	// 	GetMovieOnGoing() (movie []MovieCore, err error)
+	GetMoviePopular() (movie TmdbAPICore, err error)
+	GetMovieOnGoing() (movie TmdbAPICore, err error)
 }
