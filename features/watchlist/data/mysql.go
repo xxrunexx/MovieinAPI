@@ -1,6 +1,7 @@
 package data
 
 import (
+	"fmt"
 	"movie-api/features/watchlist"
 
 	"gorm.io/gorm"
@@ -26,9 +27,11 @@ func (wlData *WatchlistData) InsertWatchlist(watchlist watchlist.WatchlistCore) 
 func (wlData *WatchlistData) SelectWatchlist(account_id int) ([]watchlist.WatchlistCore, error) {
 	var watchlists []Watchlist
 
-	err := wlData.DB.Find(&watchlists, account_id).Error
+	// err := wlData.DB.First(&watchlists, account_id).Error
+	err := wlData.DB.Where("account_id = ?", account_id).Find(&watchlists).Error
 	if err != nil {
 		return nil, err
 	}
+	fmt.Println("Isi watchlist : ", watchlists)
 	return toWatchlistCoreList(watchlists), nil
 }

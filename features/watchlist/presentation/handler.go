@@ -20,8 +20,10 @@ func NewHandlerWatchlist(watchlistBusiness watchlist.Business) *WatchlistHandler
 
 func (wlHandler *WatchlistHandler) CreateWatchlistHandler(e echo.Context) error {
 	newWatchlist := request.ReqWatchlist{}
-	id, _ := strconv.Atoi(e.Param("id"))
-	newWatchlist.MovieID = id
+
+	// id, _ := strconv.Atoi(e.Param("id"))
+	// newWatchlist.MovieID = id
+
 	if err := e.Bind(&newWatchlist); err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
@@ -29,19 +31,19 @@ func (wlHandler *WatchlistHandler) CreateWatchlistHandler(e echo.Context) error 
 	}
 
 	if err := wlHandler.watchlistBusiness.CreateWatchlist(newWatchlist.ToWatchlistCore()); err != nil {
-		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
 
-	return e.JSON(http.StatusAccepted, map[string]interface{}{
+	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    newWatchlist,
 	})
 }
 
 func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
-	account_id, err := strconv.Atoi(e.Param("id"))
+	account_id, err := strconv.Atoi(e.Param("account_id"))
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),

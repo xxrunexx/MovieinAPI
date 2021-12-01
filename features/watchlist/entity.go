@@ -3,7 +3,7 @@ package watchlist
 import "time"
 
 type WatchlistCore struct {
-	ID        int
+	ID        uint
 	AccountID int
 	MovieID   int
 	CreatedAt time.Time

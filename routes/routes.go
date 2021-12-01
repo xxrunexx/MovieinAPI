@@ -31,8 +31,8 @@ func New() *echo.Echo {
 	// e.PUT("/account/:id", UpdateAccount)
 
 	// Watchlist
-	e.POST("/account/:id/watchlist", presenter.WatchlistPresentation.CreateWatchlistHandler)
-	e.GET("/account/:account_id", presenter.WatchlistPresentation.GetWatchlistHandler)
+	e.POST("/watchlist", presenter.WatchlistPresentation.CreateWatchlistHandler)
+	e.GET("/watchlist/:account_id", presenter.WatchlistPresentation.GetWatchlistHandler)
 	// e.GET("/account/:id", GetAccountByID)
 
 	// Movie
