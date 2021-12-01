@@ -18,5 +18,6 @@ func (mvBusiness *MovieAPIBusiness) GetMovieByTitle(title string) (tmdb.TmdbAPIC
 	if err != nil {
 		return tmdb.TmdbAPICore{}, err
 	}
+	// fmt.Println("Apa nih isinya : ", movieData)
 	return movieData, nil
 }

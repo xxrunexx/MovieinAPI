@@ -15,6 +15,9 @@ type Account struct {
 
 func toAccountRecord(account account.AccountCore) Account {
 	return Account{
+		Model: gorm.Model{
+			ID: account.ID,
+		},
 		Username: account.Username,
 		Password: account.Password,
 		Email:    account.Email,
@@ -23,6 +26,7 @@ func toAccountRecord(account account.AccountCore) Account {
 
 func toAccountCore(acc Account) account.AccountCore {
 	return account.AccountCore{
+		ID:       acc.ID,
 		Username: acc.Username,
 		Password: acc.Password,
 		Email:    acc.Email,

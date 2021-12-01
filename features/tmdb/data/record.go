@@ -2,37 +2,33 @@ package data
 
 import (
 	"movie-api/features/tmdb"
-
-	"gorm.io/gorm"
 )
 
-// SelectMovieByTitle(title string) (movie MovieCore, err error)
-
 type MovieAPI struct {
-	gorm.Model
-	Title            string
-	Genre            string
-	ImdbID           int
-	OriginalLanguage string
-	Price            int
-	Popularity       float32
-	Status           string
-	Overview         string
-	Vote_average     float32
-	Vote_count       int
+	Page    int `json:"page"`
+	Results []MovieData
+}
+
+type MovieData struct {
+	ID               uint    `json:"id"`
+	Title            string  `json:"title"`
+	OriginalLanguage string  `json:"original_language"`
+	Price            int     `json:"price"`
+	Popularity       float32 `json:"popularity"`
+	Overview         string  `json:"overview"`
+	VoteAverage      float32 `json:"vote_average"`
+	VoteCount        int     `json:"vote_count"`
 }
 
 func (movie *MovieAPI) toMovieApiCore() tmdb.TmdbAPICore {
 	return tmdb.TmdbAPICore{
-		Title:            movie.Title,
-		Genre:            movie.Genre,
-		ImdbID:           movie.ImdbID,
-		OriginalLanguage: movie.OriginalLanguage,
-		Price:            movie.Price,
-		Popularity:       movie.Popularity,
-		Status:           movie.Status,
-		Overview:         movie.Overview,
-		Vote_average:     movie.Vote_average,
-		Vote_count:       movie.Vote_count,
+		ID:               movie.Results[0].ID,
+		Title:            movie.Results[0].Title,
+		OriginalLanguage: movie.Results[0].OriginalLanguage,
+		Price:            movie.Results[0].Price,
+		Popularity:       movie.Results[0].Popularity,
+		Overview:         movie.Results[0].Overview,
+		VoteAverage:      movie.Results[0].VoteAverage,
+		VoteCount:        movie.Results[0].VoteCount,
 	}
 }
