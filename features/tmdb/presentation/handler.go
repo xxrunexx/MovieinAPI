@@ -17,10 +17,9 @@ func NewHandlerTmdb(tmdbBusiness tmdb.Business) *TmdbHandler {
 }
 
 func (tmdbHandler *TmdbHandler) GetMovieByTitleHandler(e echo.Context) error {
-	title := e.QueryParam("title")
+	title := e.Param("title")
 
 	movie, err := tmdbHandler.tmdbBusiness.GetMovieByTitle(title)
-
 	if err != nil {
 		return e.JSON(http.StatusNotFound, map[string]interface{}{
 			"message": err.Error(),
