@@ -1,6 +1,8 @@
 package business
 
-import "movie-api/features/watchlist"
+import (
+	"movie-api/features/watchlist"
+)
 
 type WatchlistBusiness struct {
 	watchlistData watchlist.Data
@@ -30,5 +32,6 @@ func (wlBusiness *WatchlistBusiness) DeleteWatchlist(id int) (watchlist.Watchlis
 	if err != nil {
 		return watchlist.WatchlistCore{}, err
 	}
+	// fmt.Println("Isi usecase : ", id)
 	return watchlistData, nil
 }

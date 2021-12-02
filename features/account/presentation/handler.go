@@ -2,6 +2,7 @@ package presentation
 
 import (
 	// Import Echo
+
 	"net/http"
 	"strconv"
 
@@ -58,6 +59,7 @@ func (accHandler *AccountHandler) GetAccountsHandler(e echo.Context) error {
 
 func (accHandler *AccountHandler) GetAccountByIDHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
+	// fmt.Println("Isi ID : ", id)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),

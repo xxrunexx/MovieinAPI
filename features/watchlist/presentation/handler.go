@@ -1,6 +1,7 @@
 package presentation
 
 import (
+	"fmt"
 	"movie-api/features/watchlist"
 	"movie-api/features/watchlist/presentation/request"
 	"movie-api/features/watchlist/presentation/response"
@@ -61,6 +62,7 @@ func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
 
 func (wlHandler *WatchlistHandler) DeleteWatchlistHandler(e echo.Context) error {
 	id, err := strconv.Atoi(e.Param("id"))
+	fmt.Println("Isi id : ", id)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
@@ -73,7 +75,7 @@ func (wlHandler *WatchlistHandler) DeleteWatchlistHandler(e echo.Context) error 
 		})
 	}
 	return e.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Data deleted",
+		"message": "data deleted",
 		"data":    response.ToWatchlistResponse(data),
 	})
 }
