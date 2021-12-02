@@ -33,7 +33,7 @@ func New() *echo.Echo {
 	// Watchlist
 	e.POST("/watchlist", presenter.WatchlistPresentation.CreateWatchlistHandler)
 	e.GET("/watchlist/:account_id", presenter.WatchlistPresentation.GetWatchlistHandler)
-	// e.GET("/account/:id", GetAccountByID)
+	e.DELETE("/watchlist/:id", presenter.WatchlistPresentation.DeleteWatchlistHandler)
 
 	// Movie
 	e.GET("/movie/:title", presenter.TmdbPresentation.GetMovieByTitleHandler)
@@ -41,6 +41,8 @@ func New() *echo.Echo {
 	jwt.GET("/movie/ongoing", presenter.TmdbPresentation.GetMovieOnGoingHandler)
 
 	// Transaction
+	e.POST("/transaction", presenter.TransactionPresentation.CreateTransactionHandler)
+	e.GET("transaction/:account_id", presenter.TransactionPresentation.GetTransactionHandler)
 
 	return e
 }

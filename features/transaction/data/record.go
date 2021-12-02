@@ -9,27 +9,15 @@ import (
 type Transaction struct {
 	gorm.Model
 	AccountID       uint
-	TotalPrice      int
+	TotalPrice      int `gorm:"default:50000"`
 	PaymentMethodID uint
 }
 
-type Account struct {
-	gorm.Model
-	Username string
-	Email    string
-	// Watchlists []WatchlistCore
-}
-
-type PaymentMethod struct {
-	gorm.Model
-	Name uint
-}
-
-// func (acc Account) toTransactionCore() transaction.AccountCore {
-// 	return transaction.AccountCore{
-// 		ID:       acc.ID,
-// 		Username: acc.Username,
-// 		Email:    acc.Email,
+// func toTransactionCore(transaction transaction.TransactionCore) Transaction {
+// 	return Transaction{
+// 		Model: gorm.Model{
+// 			ID: transaction.ID
+// 		},
 // 	}
 // }
 
@@ -40,10 +28,30 @@ type PaymentMethod struct {
 // 	}
 // }
 
-func ToTransactionRecord(transaction transaction.TransactionCore) Transaction {
+func toTransactionRecord(trx transaction.TransactionCore) Transaction {
 	return Transaction{
-		AccountID:       transaction.AccountID,
-		TotalPrice:      transaction.TotalPrice,
-		PaymentMethodID: transaction.PaymentMethodID,
+		Model: gorm.Model{
+			ID: trx.ID,
+		},
+		AccountID:       trx.AccountID,
+		TotalPrice:      trx.TotalPrice,
+		PaymentMethodID: trx.PaymentMethodID,
 	}
+}
+
+func toTransactionCore(trx Transaction) transaction.TransactionCore {
+	return transaction.TransactionCore{
+		ID:              trx.ID,
+		AccountID:       trx.AccountID,
+		PaymentMethodID: trx.PaymentMethodID,
+	}
+}
+
+func toTransactionCoreList(trxList []Transaction) []transaction.TransactionCore {
+	convTrx := []transaction.TransactionCore{}
+
+	for _, transaction := range trxList {
+		convTrx = append(convTrx, toTransactionCore(transaction))
+	}
+	return convTrx
 }

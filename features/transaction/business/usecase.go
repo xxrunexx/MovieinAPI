@@ -16,3 +16,11 @@ func (trxBusiness *TransactionBusiness) CreateTransaction(trxData transaction.Tr
 	}
 	return nil
 }
+
+func (trxBusiness *TransactionBusiness) GetTransaction(account_id int) ([]transaction.TransactionCore, error) {
+	transactions, err := trxBusiness.transactionData.SelectTransaction(account_id)
+	if err != nil {
+		return nil, err
+	}
+	return transactions, nil
+}

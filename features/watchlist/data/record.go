@@ -12,13 +12,13 @@ type Watchlist struct {
 	MovieID   int
 }
 
-func toWatchlistRecord(watchlist watchlist.WatchlistCore) Watchlist {
+func toWatchlistRecord(wl watchlist.WatchlistCore) Watchlist {
 	return Watchlist{
 		Model: gorm.Model{
-			ID: uint(watchlist.ID),
+			ID: wl.ID,
 		},
-		AccountID: watchlist.AccountID,
-		MovieID:   watchlist.MovieID,
+		AccountID: wl.AccountID,
+		MovieID:   wl.MovieID,
 	}
 }
 
