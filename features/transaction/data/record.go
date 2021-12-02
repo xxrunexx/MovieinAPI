@@ -13,21 +13,6 @@ type Transaction struct {
 	PaymentMethodID uint
 }
 
-// func toTransactionCore(transaction transaction.TransactionCore) Transaction {
-// 	return Transaction{
-// 		Model: gorm.Model{
-// 			ID: transaction.ID
-// 		},
-// 	}
-// }
-
-// func (pm PaymentMethod) toTransactionCore() transaction.PaymentMethodCore {
-// 	return transaction.PaymentMethodCore{
-// 		ID:   pm.ID,
-// 		Name: pm.Name,
-// 	}
-// }
-
 func toTransactionRecord(trx transaction.TransactionCore) Transaction {
 	return Transaction{
 		Model: gorm.Model{
