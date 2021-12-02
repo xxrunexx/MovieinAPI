@@ -14,12 +14,12 @@ type WatchlistCore struct {
 type Data interface {
 	InsertWatchlist(wlData WatchlistCore) (err error)
 	SelectWatchlist(account_id int) ([]WatchlistCore, error)
-	DeleteWatchlist(id int) (watchlist WatchlistCore, err error)
+	DeleteWatchlist(id int) (WatchlistCore, error)
 }
 
 // Untuk layer business / Service
 type Business interface {
 	CreateWatchlist(wlData WatchlistCore) (err error)
 	GetWatchlist(account_id int) ([]WatchlistCore, error)
-	DeleteWatchlist(id int) (watchlist WatchlistCore, err error)
+	DeleteWatchlist(id int) (WatchlistCore, error)
 }

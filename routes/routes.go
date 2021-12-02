@@ -44,5 +44,7 @@ func New() *echo.Echo {
 	e.POST("/transaction", presenter.TransactionPresentation.CreateTransactionHandler)
 	e.GET("transaction/:account_id", presenter.TransactionPresentation.GetTransactionHandler)
 
+	// Payment Method
+
 	return e
 }
