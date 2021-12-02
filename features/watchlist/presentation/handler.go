@@ -21,9 +21,6 @@ func NewHandlerWatchlist(watchlistBusiness watchlist.Business) *WatchlistHandler
 func (wlHandler *WatchlistHandler) CreateWatchlistHandler(e echo.Context) error {
 	newWatchlist := request.ReqWatchlist{}
 
-	// id, _ := strconv.Atoi(e.Param("id"))
-	// newWatchlist.MovieID = id
-
 	if err := e.Bind(&newWatchlist); err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
@@ -59,5 +56,24 @@ func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "Success",
 		"data":    response.ToWatchlistResponseList(data),
+	})
+}
+
+func (wlHandler *WatchlistHandler) DeleteWatchlistHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	data, err := wlHandler.watchlistBusiness.DeleteWatchlist(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Data deleted",
+		"data":    response.ToWatchlistResponse(data),
 	})
 }

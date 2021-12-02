@@ -15,7 +15,7 @@ func NewMySqlTransaction(DB *gorm.DB) transaction.Data {
 }
 
 func (trxData *TransactionData) InsertTransaction(transaction transaction.TransactionCore) error {
-	convData := ToTransactionRecord(transaction)
+	convData := toTransactionRecord(transaction)
 
 	if err := trxData.DB.Create(&convData).Error; err != nil {
 		return err

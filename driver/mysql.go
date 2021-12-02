@@ -2,6 +2,7 @@ package driver
 
 import (
 	accdata "movie-api/features/account/data"
+	trxdata "movie-api/features/transaction/data"
 	wldata "movie-api/features/watchlist/data"
 
 	"gorm.io/driver/mysql"
@@ -23,5 +24,5 @@ func InitDB() {
 	}
 
 	DB = db
-	DB.AutoMigrate(&accdata.Account{}, &wldata.Watchlist{})
+	DB.AutoMigrate(&accdata.Account{}, &wldata.Watchlist{}, &trxdata.Transaction{})
 }

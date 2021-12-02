@@ -27,11 +27,20 @@ func (wlData *WatchlistData) InsertWatchlist(watchlist watchlist.WatchlistCore) 
 func (wlData *WatchlistData) SelectWatchlist(account_id int) ([]watchlist.WatchlistCore, error) {
 	var watchlists []Watchlist
 
-	// err := wlData.DB.First(&watchlists, account_id).Error
 	err := wlData.DB.Where("account_id = ?", account_id).Find(&watchlists).Error
 	if err != nil {
 		return nil, err
 	}
 	fmt.Println("Isi watchlist : ", watchlists)
 	return toWatchlistCoreList(watchlists), nil
+}
+
+func (wlData *WatchlistData) DeleteWatchlist(id int) (watchlist.WatchlistCore, error) {
+	var singleWatchlist Watchlist
+
+	err := wlData.DB.Where("id = ?", id).Delete(&singleWatchlist).Error
+	if err != nil {
+		return watchlist.WatchlistCore{}, err
+	}
+	return toWatchlistCore(singleWatchlist), nil
 }
