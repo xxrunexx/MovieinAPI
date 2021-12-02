@@ -14,11 +14,11 @@ type TransactionCore struct {
 // Untuk layer data
 type Data interface {
 	InsertTransaction(trxData TransactionCore) (err error)
-	SelectTransaction() ([]TransactionCore, error)
+	SelectTransaction(accound_id int) ([]TransactionCore, error)
 }
 
 // Untuk layer business
 type Business interface {
 	CreateTransaction(trxData TransactionCore) (err error)
-	GetTransaction() ([]TransactionCore, error)
+	GetTransaction(account_id int) ([]TransactionCore, error)
 }

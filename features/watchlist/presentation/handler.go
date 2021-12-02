@@ -54,7 +54,7 @@ func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
 		})
 	}
 	return e.JSON(http.StatusOK, map[string]interface{}{
-		"message": "Success",
+		"message": "success",
 		"data":    response.ToWatchlistResponseList(data),
 	})
 }

@@ -39,21 +39,19 @@ func toTransactionRecord(trx transaction.TransactionCore) Transaction {
 	}
 }
 
-// BUAT GET
+func toTransactionCore(trx Transaction) transaction.TransactionCore {
+	return transaction.TransactionCore{
+		ID:              trx.ID,
+		AccountID:       trx.AccountID,
+		PaymentMethodID: trx.PaymentMethodID,
+	}
+}
 
-// func toTransactionCore(trx Transaction) transaction.TransactionCore {
-// 	return transaction.TransactionCore{
-// 		ID:              trx.ID,
-// 		AccountID:       trx.AccountID,
-// 		PaymentMethodID: trx.PaymentMethodID,
-// 	}
-// }
+func toTransactionCoreList(trxList []Transaction) []transaction.TransactionCore {
+	convTrx := []transaction.TransactionCore{}
 
-// func toTransactionCoreList(trxList []Transaction) []transaction.TransactionCore {
-// 	convTrx := []transaction.TransactionCore{}
-
-// 	for _, transaction := range trxList {
-// 		convTrx = append(convTrx, toTransactionCore(transaction))
-// 	}
-// 	return convTrx
-// }
+	for _, transaction := range trxList {
+		convTrx = append(convTrx, toTransactionCore(transaction))
+	}
+	return convTrx
+}

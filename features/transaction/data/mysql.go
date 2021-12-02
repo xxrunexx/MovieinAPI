@@ -22,3 +22,14 @@ func (trxData *TransactionData) InsertTransaction(transaction transaction.Transa
 	}
 	return nil
 }
+
+func (trxData *TransactionData) SelectTransaction(accound_id int) ([]transaction.TransactionCore, error) {
+	var transactions []Transaction
+
+	err := trxData.DB.Where("account_id = ?", accound_id).Find(&transactions).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return toTransactionCoreList(transactions), nil
+}

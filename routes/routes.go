@@ -42,5 +42,7 @@ func New() *echo.Echo {
 
 	// Transaction
 	e.POST("/transaction", presenter.TransactionPresentation.CreateTransactionHandler)
+	e.GET("transaction/:account_id", presenter.TransactionPresentation.GetTransactionHandler)
+
 	return e
 }
