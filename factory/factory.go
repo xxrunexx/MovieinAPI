@@ -16,12 +16,18 @@ import (
 	tmdbbus "movie-api/features/tmdb/business"
 	tmdbdata "movie-api/features/tmdb/data"
 	tmdbpres "movie-api/features/tmdb/presentation"
+
+	// Transaction Domain
+	trxbus "movie-api/features/transaction/business"
+	trxdata "movie-api/features/transaction/data"
+	trxpres "movie-api/features/transaction/presentation"
 )
 
 type presenter struct {
-	AccountPresentation   accpres.AccountHandler
-	WatchlistPresentation wlpres.WatchlistHandler
-	TmdbPresentation      tmdbpres.TmdbHandler
+	AccountPresentation     accpres.AccountHandler
+	WatchlistPresentation   wlpres.WatchlistHandler
+	TmdbPresentation        tmdbpres.TmdbHandler
+	TransactionPresentation trxpres.TransactionHandler
 }
 
 func Init() presenter {
@@ -34,9 +40,13 @@ func Init() presenter {
 	// 3rdparty
 	tmdbData := tmdbdata.NewData()
 	tmdbBusiness := tmdbbus.NewBusinessTmdb(tmdbData)
+	// Transaction
+	trxData := trxdata.NewMySqlTransaction(driver.DB)
+	trxBusiness := trxbus.NewBusinessTransaction(trxData)
 	return presenter{
-		AccountPresentation:   *accpres.NewHandlerAccount(accountBusiness),
-		WatchlistPresentation: *wlpres.NewHandlerWatchlist(watchlistBusiness),
-		TmdbPresentation:      *tmdbpres.NewHandlerTmdb(tmdbBusiness),
+		AccountPresentation:     *accpres.NewHandlerAccount(accountBusiness),
+		WatchlistPresentation:   *wlpres.NewHandlerWatchlist(watchlistBusiness),
+		TmdbPresentation:        *tmdbpres.NewHandlerTmdb(tmdbBusiness),
+		TransactionPresentation: *trxpres.NewHandlerTransaction(trxBusiness),
 	}
 }

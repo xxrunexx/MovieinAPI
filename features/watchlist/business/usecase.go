@@ -17,10 +17,18 @@ func (wlBusiness *WatchlistBusiness) CreateWatchlist(wlData watchlist.WatchlistC
 	return nil
 }
 
-func (wlBusiness *WatchlistBusiness) GetWatchlist(wlData watchlist.WatchlistCore) ([]watchlist.WatchlistCore, error) {
-	watchlists, err := wlBusiness.watchlistData.SelectWatchlist(wlData)
+func (wlBusiness *WatchlistBusiness) GetWatchlist(account_id int) ([]watchlist.WatchlistCore, error) {
+	watchlists, err := wlBusiness.watchlistData.SelectWatchlist(account_id)
 	if err != nil {
 		return nil, err
 	}
 	return watchlists, nil
+}
+
+func (wlBusiness *WatchlistBusiness) DeleteWatchlist(id int) (watchlist.WatchlistCore, error) {
+	watchlistData, err := wlBusiness.watchlistData.DeleteWatchlist(id)
+	if err != nil {
+		return watchlist.WatchlistCore{}, err
+	}
+	return watchlistData, nil
 }
