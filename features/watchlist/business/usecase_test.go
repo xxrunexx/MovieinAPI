@@ -55,8 +55,16 @@ func TestGetWatchlist(t *testing.T) {
 	})
 }
 
-// func TestDeleteWatchlist(t *testing.T) {
-// 	t.Run("validate delete watchlist", func(t *testing.T) {
+func TestDeleteWatchlist(t *testing.T) {
+	t.Run("validate delete watchlist", func(t *testing.T) {
+		mockData.On("DeleteWatchlist", mock.AnythingOfType("int")).Return(nil).Once()
+		err := watchlistBussiness.DeleteWatchlist(3)
+		assert.Nil(t, err)
+	})
 
-// 	})
-// }
+	t.Run("error delete watchlist", func(t *testing.T) {
+		mockData.On("DeleteWatchlist", mock.AnythingOfType("int")).Return(errors.New("error")).Once()
+		err := watchlistBussiness.DeleteWatchlist(3)
+		assert.NotNil(t, err)
+	})
+}

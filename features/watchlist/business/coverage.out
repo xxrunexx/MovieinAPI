@@ -6,6 +6,6 @@ movie-api/features/watchlist/business/usecase.go:16.73,18.3 1 1
 movie-api/features/watchlist/business/usecase.go:22.102,24.16 2 1
 movie-api/features/watchlist/business/usecase.go:27.2,27.24 1 1
 movie-api/features/watchlist/business/usecase.go:24.16,26.3 1 1
-movie-api/features/watchlist/business/usecase.go:30.95,32.16 2 0
-movie-api/features/watchlist/business/usecase.go:36.2,36.27 1 0
-movie-api/features/watchlist/business/usecase.go:32.16,34.3 1 0
+movie-api/features/watchlist/business/usecase.go:30.68,32.16 2 1
+movie-api/features/watchlist/business/usecase.go:35.2,35.12 1 1
+movie-api/features/watchlist/business/usecase.go:32.16,34.3 1 1
