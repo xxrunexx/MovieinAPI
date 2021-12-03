@@ -59,3 +59,22 @@ func (trxHandler *TransactionHandler) GetTransactionHandler(e echo.Context) erro
 		"data":    response.ToTransactionResponseList(data),
 	})
 }
+
+func (trxHandler *TransactionHandler) DeleteTransactionHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.QueryParam("id"))
+	// fmt.Println("Isi id : ", id)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	err = trxHandler.transactionBusiness.DeleteTransaction(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "data deleted",
+	})
+}

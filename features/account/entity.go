@@ -18,7 +18,7 @@ type Data interface {
 	SelectAccount(AccountCore) (account []AccountCore, err error)
 	SelectAccountByID(id int) (account AccountCore, err error)
 	CheckAccount(AccountCore) (account AccountCore, err error)
-	// DeleteAccount(AccountCore) (account AccountCore, err error)
+	UpdateAccount(id int) (account AccountCore, err error)
 }
 
 // Untuk layer business
@@ -27,5 +27,5 @@ type Business interface {
 	GetAccount(AccountCore) (account []AccountCore, err error)
 	GetAccountByID(id int) (account AccountCore, err error)
 	LoginAccount(AccountCore) (account AccountCore, err error)
-	// RemoveAccount(AccountCore) (account AccountCore, err error)
+	UpdateAccount(id int) (account AccountCore, err error)
 }

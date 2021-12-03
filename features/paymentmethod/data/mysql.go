@@ -22,3 +22,23 @@ func (pmData *PaymentmethodData) InsertPaymentmethod(paymentmethod paymentmethod
 	}
 	return nil
 }
+
+func (pmData *PaymentmethodData) SelectPaymentmethod(id int) (paymentmethod.PaymentmethodCore, error) {
+	var singlePaymentMethod Paymentmethod
+
+	err := pmData.DB.Where("id = ?", id).Find(&singlePaymentMethod).Error
+	if err != nil {
+		return paymentmethod.PaymentmethodCore{}, err
+	}
+	return toPaymentmethodCore(singlePaymentMethod), nil
+}
+
+func (pmData *PaymentmethodData) DeletePaymentmethod(id int) error {
+	var singlePaymentmethod Paymentmethod
+
+	err := pmData.DB.Where("id = ?", id).Delete(&singlePaymentmethod).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

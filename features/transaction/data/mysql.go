@@ -33,3 +33,13 @@ func (trxData *TransactionData) SelectTransaction(accound_id int) ([]transaction
 
 	return toTransactionCoreList(transactions), nil
 }
+
+func (trxData *TransactionData) DeleteTransaction(id int) error {
+	var singleTransaction Transaction
+
+	err := trxData.DB.Where("id = ?", id).Delete(&singleTransaction).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}

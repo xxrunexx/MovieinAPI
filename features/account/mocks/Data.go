@@ -91,3 +91,24 @@ func (_m *Data) SelectAccountByID(id int) (account.AccountCore, error) {
 
 	return r0, r1
 }
+
+// UpdateAccount provides a mock function with given fields: id
+func (_m *Data) UpdateAccount(id int) (account.AccountCore, error) {
+	ret := _m.Called(id)
+
+	var r0 account.AccountCore
+	if rf, ok := ret.Get(0).(func(int) account.AccountCore); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Get(0).(account.AccountCore)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func(int) error); ok {
+		r1 = rf(id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}

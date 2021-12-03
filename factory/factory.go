@@ -21,32 +21,46 @@ import (
 	trxbus "movie-api/features/transaction/business"
 	trxdata "movie-api/features/transaction/data"
 	trxpres "movie-api/features/transaction/presentation"
+
+	// Paymentmethod Domain
+	pmbus "movie-api/features/paymentmethod/business"
+	pmdata "movie-api/features/paymentmethod/data"
+	pmpres "movie-api/features/paymentmethod/presentation"
 )
 
 type presenter struct {
-	AccountPresentation     accpres.AccountHandler
-	WatchlistPresentation   wlpres.WatchlistHandler
-	TmdbPresentation        tmdbpres.TmdbHandler
-	TransactionPresentation trxpres.TransactionHandler
+	AccountPresentation       accpres.AccountHandler
+	WatchlistPresentation     wlpres.WatchlistHandler
+	TmdbPresentation          tmdbpres.TmdbHandler
+	TransactionPresentation   trxpres.TransactionHandler
+	PaymentmethodPresentation pmpres.PaymentmethodHandler
 }
 
 func Init() presenter {
 	// Account
 	accountData := accdata.NewMySqlAccount(driver.DB)
 	accountBusiness := accbus.NewBusinessAccount(accountData)
+
 	// Watchlist
 	watchlistData := wldata.NewMySqlWatchlist(driver.DB)
 	watchlistBusiness := wlbus.NewBusinessWatchlist(watchlistData)
+
 	// 3rdparty
 	tmdbData := tmdbdata.NewData()
 	tmdbBusiness := tmdbbus.NewBusinessTmdb(tmdbData)
+
 	// Transaction
 	trxData := trxdata.NewMySqlTransaction(driver.DB)
 	trxBusiness := trxbus.NewBusinessTransaction(trxData)
+
+	// Paymentmethod
+	pmData := pmdata.NewMySqlPaymentmethod(driver.DB)
+	pmBusiness := pmbus.NewBusinessPaymentmethod(pmData)
 	return presenter{
-		AccountPresentation:     *accpres.NewHandlerAccount(accountBusiness),
-		WatchlistPresentation:   *wlpres.NewHandlerWatchlist(watchlistBusiness),
-		TmdbPresentation:        *tmdbpres.NewHandlerTmdb(tmdbBusiness),
-		TransactionPresentation: *trxpres.NewHandlerTransaction(trxBusiness),
+		AccountPresentation:       *accpres.NewHandlerAccount(accountBusiness),
+		WatchlistPresentation:     *wlpres.NewHandlerWatchlist(watchlistBusiness),
+		TmdbPresentation:          *tmdbpres.NewHandlerTmdb(tmdbBusiness),
+		TransactionPresentation:   *trxpres.NewHandlerTransaction(trxBusiness),
+		PaymentmethodPresentation: *pmpres.NewHandlerPaymentmethod(pmBusiness),
 	}
 }
