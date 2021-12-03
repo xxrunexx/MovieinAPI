@@ -54,3 +54,17 @@ func TestGetTransaction(t *testing.T) {
 		assert.Nil(t, resp)
 	})
 }
+
+func TestDeleteTransaction(t *testing.T) {
+	t.Run("validate delete transaction", func(t *testing.T) {
+		mockData.On("DeleteTransaction", mock.AnythingOfType("int")).Return(nil).Once()
+		err := transactionBusiness.DeleteTransaction(3)
+		assert.Nil(t, err)
+	})
+
+	t.Run("error delete transaction", func(t *testing.T) {
+		mockData.On("DeleteTransaction", mock.AnythingOfType("int")).Return(errors.New("error")).Once()
+		err := transactionBusiness.DeleteTransaction(3)
+		assert.NotNil(t, err)
+	})
+}
