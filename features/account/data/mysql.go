@@ -4,6 +4,7 @@ import (
 	// Import GORM
 
 	"errors"
+	"fmt"
 
 	"gorm.io/gorm"
 
@@ -70,4 +71,20 @@ func (accData *AccountData) CheckAccount(data account.AccountCore) (account.Acco
 	}
 
 	return toAccountCore(accountData), nil
+}
+
+func (accData *AccountData) UpdateAccount(id int) (account.AccountCore, error) {
+	var singleAccount Account
+	fmt.Println("Isi single account : ", singleAccount)
+	fmt.Println("id : ", id)
+	err := accData.DB.Model(&singleAccount).Where("id=?", id).Updates(&singleAccount).Error
+	// if singleAccount.Username == "" {
+	// 	return account.AccountCore{}, errors.New("user not found")
+	// }
+
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+
+	return toAccountCore(singleAccount), nil
 }

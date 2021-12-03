@@ -48,3 +48,12 @@ func (accBusiness *AccountBusiness) LoginAccount(accData account.AccountCore) (a
 	}
 	return accountData, nil
 }
+
+func (accBusiness *AccountBusiness) UpdateAccount(id int) (account.AccountCore, error) {
+	accountData, err := accBusiness.accountData.UpdateAccount(id)
+
+	if err != nil {
+		return account.AccountCore{}, err
+	}
+	return accountData, nil
+}

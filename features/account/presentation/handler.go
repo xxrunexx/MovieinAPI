@@ -93,3 +93,24 @@ func (accHandler *AccountHandler) LoginAccountHandler(e echo.Context) error {
 		"data":    response.ToAccountLoginResponse(data),
 	})
 }
+
+func (accHandler *AccountHandler) UpdateAccountHandler(e echo.Context) error {
+	id, err := strconv.Atoi(e.Param("id"))
+	// fmt.Println("Test : ", id)
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+
+	data, err := accHandler.accountBusiness.UpdateAccount(id)
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": err.Error(),
+		})
+	}
+	return e.JSON(http.StatusOK, map[string]interface{}{
+		"message": "Success",
+		"data":    response.ToAccountResponse(data),
+	})
+}
