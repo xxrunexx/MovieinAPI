@@ -24,3 +24,11 @@ func (trxBusiness *TransactionBusiness) GetTransaction(account_id int) ([]transa
 	}
 	return transactions, nil
 }
+
+func (trxBusiness *TransactionBusiness) DeleteTransaction(id int) error {
+	err := trxBusiness.transactionData.DeleteTransaction(id)
+	if err != nil {
+		return err
+	}
+	return nil
+}
