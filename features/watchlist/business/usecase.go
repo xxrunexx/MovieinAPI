@@ -27,11 +27,10 @@ func (wlBusiness *WatchlistBusiness) GetWatchlist(account_id int) ([]watchlist.W
 	return watchlists, nil
 }
 
-func (wlBusiness *WatchlistBusiness) DeleteWatchlist(id int) (watchlist.WatchlistCore, error) {
-	watchlistData, err := wlBusiness.watchlistData.DeleteWatchlist(id)
+func (wlBusiness *WatchlistBusiness) DeleteWatchlist(id int) error {
+	err := wlBusiness.watchlistData.DeleteWatchlist(id)
 	if err != nil {
-		return watchlist.WatchlistCore{}, err
+		return err
 	}
-	// fmt.Println("Isi usecase : ", id)
-	return watchlistData, nil
+	return nil
 }
