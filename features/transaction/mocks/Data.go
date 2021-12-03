@@ -13,6 +13,20 @@ type Data struct {
 	mock.Mock
 }
 
+// DeleteTransaction provides a mock function with given fields: id
+func (_m *Data) DeleteTransaction(id int) error {
+	ret := _m.Called(id)
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(int) error); ok {
+		r0 = rf(id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // InsertTransaction provides a mock function with given fields: trxData
 func (_m *Data) InsertTransaction(trxData transaction.TransactionCore) error {
 	ret := _m.Called(trxData)

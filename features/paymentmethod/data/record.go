@@ -20,14 +20,12 @@ func toPaymentmethodRecord(pm paymentmethod.PaymentmethodCore) Paymentmethod {
 	}
 }
 
-// BUAT NANTI
-
-// func toPaymentmethodCore(pm Paymentmethod) paymentmethod.PaymentmethodCore {
-// 	return paymentmethod.PaymentmethodCore{
-// 		ID:   pm.ID,
-// 		Name: pm.Name,
-// 	}
-// }
+func toPaymentmethodCore(pm Paymentmethod) paymentmethod.PaymentmethodCore {
+	return paymentmethod.PaymentmethodCore{
+		ID:   pm.ID,
+		Name: pm.Name,
+	}
+}
 
 // func toPaymentmethodCoreList(pmList []Paymentmethod) []paymentmethod.PaymentmethodCore {
 // 	convPm := []paymentmethod.PaymentmethodCore{}

@@ -42,6 +42,7 @@ func (wlHandler *WatchlistHandler) CreateWatchlistHandler(e echo.Context) error 
 
 func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
 	account_id, err := strconv.Atoi(e.Param("account_id"))
+	fmt.Println("Isi account id : ", account_id)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
@@ -61,14 +62,14 @@ func (wlHandler *WatchlistHandler) GetWatchlistHandler(e echo.Context) error {
 }
 
 func (wlHandler *WatchlistHandler) DeleteWatchlistHandler(e echo.Context) error {
-	id, err := strconv.Atoi(e.Param("id"))
-	fmt.Println("Isi id : ", id)
+	id, err := strconv.Atoi(e.QueryParam("id"))
+	// fmt.Println("Isi id : ", id)
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, map[string]interface{}{
 			"message": err.Error(),
 		})
 	}
-	data, err := wlHandler.watchlistBusiness.DeleteWatchlist(id)
+	err = wlHandler.watchlistBusiness.DeleteWatchlist(id)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": err.Error(),
@@ -76,6 +77,5 @@ func (wlHandler *WatchlistHandler) DeleteWatchlistHandler(e echo.Context) error 
 	}
 	return e.JSON(http.StatusOK, map[string]interface{}{
 		"message": "data deleted",
-		"data":    response.ToWatchlistResponse(data),
 	})
 }

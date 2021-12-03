@@ -35,12 +35,12 @@ func (wlData *WatchlistData) SelectWatchlist(account_id int) ([]watchlist.Watchl
 	return toWatchlistCoreList(watchlists), nil
 }
 
-func (wlData *WatchlistData) DeleteWatchlist(id int) (watchlist.WatchlistCore, error) {
+func (wlData *WatchlistData) DeleteWatchlist(id int) error {
 	var singleWatchlist Watchlist
 
 	err := wlData.DB.Where("id = ?", id).Delete(&singleWatchlist).Error
 	if err != nil {
-		return watchlist.WatchlistCore{}, err
+		return err
 	}
-	return toWatchlistCore(singleWatchlist), nil
+	return nil
 }
