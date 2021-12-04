@@ -14,5 +14,5 @@ func main() {
 	_middleware.LogMiddlewareInit(e)
 
 	// Starting the server
-	e.Start(":8585")
+	e.Start(":8000")
 }

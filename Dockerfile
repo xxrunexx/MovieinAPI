@@ -9,6 +9,6 @@ RUN go mod download
 
 RUN go build -o mainfile
 
-EXPOSE 8181
+EXPOSE 8000
 
 CMD ["./mainfile"]
