@@ -45,14 +45,14 @@ func TestGetPaymentmethod(t *testing.T) {
 		mockData.On("SelectPaymentmethod", mock.AnythingOfType("int")).Return(paymentmethod.PaymentmethodCore{}, nil).Once()
 		resp, err := pmBussiness.GetPaymentmethod(3)
 		assert.Nil(t, err)
-		assert.Nil(t, resp)
+		assert.NotNil(t, resp)
 	})
 
 	t.Run("error get payment method", func(t *testing.T) {
 		mockData.On("SelectPaymentmethod", mock.AnythingOfType("int")).Return(paymentmethod.PaymentmethodCore{}, errors.New("error")).Once()
 		resp, err := pmBussiness.GetPaymentmethod(3)
 		assert.NotNil(t, err)
-		assert.Nil(t, resp)
+		assert.NotNil(t, resp)
 	})
 }
 
