@@ -18,17 +18,15 @@ jobs:
         run: go test ./... -cover
   build-push-docker:
     name: "build image and push registry dockerhub"
-    runs-on: "ubuntu-latest"
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: build image
-      run: docker build -t xxrunexx/moviein:latest .
+        run: docker build -t xxrunexx/moviein:latest .
       - name: login dockerhub
         uses: docker/login-action@v1
         with:
           username: ${{ secret.DOCKERHUB_USERNAME }}
           password: ${{ secret.DOCKERHUB_PASSWORD }}
       - name: push image to dockerhub
-      - run: docker push xxrunexx/moviein:latest
-
-
+        run: docker push xxrunexx/moviein:latest
