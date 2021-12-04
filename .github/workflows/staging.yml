@@ -30,3 +30,26 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: push image to dockerhub
         run: docker push xxrunexx/moviein:latest
+  deployment:
+    name: "deploy to ec2"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: configure ssh
+        env:
+          SSH_USER: ${{ secrets.SSH_USERNAME }}
+          SSH_KEY: ${{ secrets.MOVIE_PEM }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/movie.pem
+          chmod 700 ~/.ssh/movie.pem
+          cat >> ~/.ssh/config << END
+          Host development
+            HostName $SSH_HOST
+            User $SSH_USER
+            IdentityFile ~/.ssh/movie.pem
+            StrictHostKeyChecking=no
+          END
+      - name: connect ec2, remove container, pull from registry, end start
+        run: ssh development 'docker rm -f $(docker ps -a -q)' || true && docker pull xxrunexx/moviein:latest && docker run -p 8000:8000 --name moviein-container xxrunexx/moviein:latest
